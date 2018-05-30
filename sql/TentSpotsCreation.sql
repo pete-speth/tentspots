@@ -2,6 +2,8 @@ drop database if exists TentSpots;
 create database TentSpots;
 use TentSpots;
 
+-- CREATE SCHEMA
+
 create table Campsite (
 	Id int auto_increment primary key,
     `Name` varchar(50) not null,
@@ -10,8 +12,8 @@ create table Campsite (
 
 create table Location (
 	Id int auto_increment primary key,
-    Latitude fixed(10,10) not null,
-    Longitude fixed(10,10) not null,
+    Latitude fixed(13,10) not null,
+    Longitude fixed(13,10) not null,
     ParkId int null,
     StateAbbr char(2) not null
     
@@ -70,6 +72,3 @@ create table Visit (
 alter table Visit
 	add constraint fk_Visit_Campsite
 	foreign key (CampsiteId) references Campsite(Id);
-
-
-
