@@ -5,15 +5,13 @@
  */
 package com.tsguild.tentspots.data;
 
-import com.tsguild.tentspots.model.Visit;
-import java.util.List;
+import com.tsguild.tentspots.model.Feature;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author pspethmann
  */
-public interface VisitRepository extends JpaRepository<Visit,Integer> {
+public interface FeatureRepository extends JpaRepository<Feature, Integer> {
     
-    public List<Visit> findByCampsiteId(int id);
 }

@@ -27,6 +27,7 @@ public class Visit {
     private LocalDate startDate;
     private LocalDate endDate;
     private int groupSize;
+    private String notes;
     
     @ManyToOne
     @JoinColumn(name = "CampsiteId")
@@ -75,6 +76,12 @@ public class Visit {
     public void setCampsite(Campsite campsite) {
         this.campsite = campsite;
     }
-    
-    
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }

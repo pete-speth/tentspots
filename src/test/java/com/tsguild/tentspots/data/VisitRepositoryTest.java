@@ -8,6 +8,7 @@ package com.tsguild.tentspots.data;
 import com.tsguild.tentspots.model.Visit;
 import java.time.LocalDate;
 import java.util.List;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +37,16 @@ public class VisitRepositoryTest {
     public void testFindAll(){
         
         List<Visit> visits = visitRepo.findAll();
+        
+        assertNotNull(visits);
+        assertTrue(visits.size() > 0);
+    }
+    
+    @Test
+    public void testFindByCampsite(){
+        
+        List<Visit> visits = visitRepo.findByCampsiteId(1);
+        assertNotNull(visits);
         assertTrue(visits.size() > 0);
     }
     

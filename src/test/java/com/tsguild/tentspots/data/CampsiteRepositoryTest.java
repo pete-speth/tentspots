@@ -11,6 +11,7 @@ import com.tsguild.tentspots.model.Park;
 import com.tsguild.tentspots.model.State;
 import java.math.BigDecimal;
 import java.util.List;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +45,18 @@ public class CampsiteRepositoryTest {
     public void testFindAll(){
         
         List<Campsite> campsites = campRepo.findAll();
+        assertNotNull(campsites);
         assertTrue(campsites.size() > 0);
+    }
+    
+        
+    @Test
+    public void testSearch(){
+        
+        List<Campsite> results = campRepo.search(null, "BWCAW", "MN");
+        assertNotNull(results);
+        assertTrue(results.size() > 0);
+        
     }
     
     @Test

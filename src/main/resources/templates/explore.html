@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Explore | TentSpots</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <h1>TentSpots</h1>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a href="/" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item active">
+                <a href="/explore" class="nav-link">Explore</a>
+            </li>
+            <li class="nav-item">
+                <a href="/update" class="nav-link">Update</a>
+            </li>
+        </ul>
+
+        <div class="col-md-3">
+            <h3>Filter</h3>
+            <form>
+                <label for="campsiteName">Name: </label>
+                <input type="text" name="campsiteName" />
+                <br/>
+
+                <label for="parkName">Park: </label>
+                <input type="text" name="parkName" />
+                <br/>
+
+                <label for="state">State: </label>
+                <select name="state">
+                    <option value="" selected>--Select A State--</option>
+                    <option th:each="state: ${states}" th:value="${state}" th:text="${state.name}"></option>
+                </select>
+                <br/>
+
+                <button type="submit" class="btn btn-outline-primary">Apply</button>
+            </form>
+        </div>
+        <div class="col-md-9">
+            <h3>Campsites</h3>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Park</th>
+                    <th>State</th>
+                    <th>Total Visits</th>
+                    <th></th>
+                </tr>
+                <tr class="campsiteRow" th:each="campsite: ${campsites}">
+                    <td>
+                        <a th:href="'/explore/campsite/' + ${campsite.id}" th:text="${campsite.name}"></a>
+                    </td>
+                    <td th:text="${campsite.location.park.name}"></td>
+                    <td th:text="${campsite.location.state.name}"></td>
+                    <td th:text="${campsite.numVisits}"></td>
+                    <td>
+                        <a th:href="'/explore/campsite/' + ${campsite.id} + '/log/add'" class="btn btn-primary">Log Visit</a>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -8,12 +8,13 @@ create table Campsite (
 	Id int auto_increment primary key,
     `Name` varchar(50) not null,
     LocationId int not null
+    
 );
 
 create table Location (
 	Id int auto_increment primary key,
-    Latitude fixed(13,10) not null,
-    Longitude fixed(13,10) not null,
+    Latitude fixed(8,6) not null,
+    Longitude fixed(9,6) not null,
     ParkId int null,
     StateAbbr char(2) not null
     
@@ -66,7 +67,8 @@ create table Visit (
     StartDate date not null,
     EndDate date not null,
     GroupSize int not null,
-    CampsiteId int not null
+    CampsiteId int not null,
+    Notes varchar (500) null
 );
 
 alter table Visit
