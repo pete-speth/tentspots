@@ -7,75 +7,102 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Explore | TentSpots</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    <link rel="shortcut icon" href="/images/tent.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/explore.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1>TentSpots</h1>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a href="/" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item active">
-                <a href="/explore" class="nav-link">Explore</a>
-            </li>
-            <li class="nav-item">
-                <a href="/update" class="nav-link">Update</a>
-            </li>
-        </ul>
-
-        <div class="col-md-3">
-            <h3>Filter</h3>
-            <form>
-                <label for="campsiteName">Name: </label>
-                <input type="text" name="campsiteName" />
-                <br/>
-
-                <label for="parkName">Park: </label>
-                <input type="text" name="parkName" />
-                <br/>
-
-                <label for="state">State: </label>
-                <select name="state">
-                    <option value="" selected>--Select A State--</option>
-                    <option th:each="state: ${states}" th:value="${state}" th:text="${state.name}"></option>
-                </select>
-                <br/>
-
-                <button type="submit" class="btn btn-outline-primary">Apply</button>
-            </form>
+    <div class="container-fluid pl-5 pr-5">
+        <div class="header">
+            <div sec:authorize="isAuthenticated()" style="text-align: right; font-size: 18px">
+                <a href="/logout">Log Out</a>
+            </div>
+            <h1>TentSpots<image id="fire" src="/images/campfire.gif"></image></h1>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/explore" class="nav-link active">Explore</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/update" class="nav-link">Update</a>
+                </li>
+            </ul>
         </div>
-        <div class="col-md-9">
-            <h3>Campsites</h3>
-            <table class="table">
-                <tr>
-                    <th>Name</th>
-                    <th>Park</th>
-                    <th>State</th>
-                    <th>Total Visits</th>
-                    <th></th>
-                </tr>
-                <tr class="campsiteRow" th:each="campsite: ${campsites}">
-                    <td>
-                        <a th:href="'/explore/campsite/' + ${campsite.id}" th:text="${campsite.name}"></a>
-                    </td>
-                    <td th:text="${campsite.location.park.name}"></td>
-                    <td th:text="${campsite.location.state.name}"></td>
-                    <td th:text="${campsite.numVisits}"></td>
-                    <td>
-                        <a th:href="'/explore/campsite/' + ${campsite.id} + '/log/add'" class="btn btn-primary">Log Visit</a>
-                    </td>
-                </tr>
-            </table>
 
+        <div class="row">
+            <div class="col-md-3">
+                <h2>Filter</h2>
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="campsiteName">Name: </label>
+                        <input type="text" name="campsiteName" />
+                        <br/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="parkName">Park: </label>
+                        <input type="text" name="parkName" />
+                        <br/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stateAbbr">State: </label>
+                        <select name="stateAbbr">
+                            <option value="" selected>--Select A State--</option>
+                            <option th:each="state: ${states}" th:value="${state.abbr}" th:text="${state.name}"></option>
+                        </select>
+                        <br/>
+                    </div>
+
+                    <div id="buttons">
+                        <button type="submit" class="btn btn-outline-primary">Apply</button>
+                        <a href="/explore" class="btn btn-outline-primary">Reset</a>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-9">
+                <h2>Campsites</h2>
+                <table class="table table-hover">
+
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Park</th>
+                            <th>State</th>
+                            <th>Total Visits</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="campsiteRow" th:each="campsite: ${campsites}">
+                            <td>
+                                <a th:href="'/explore/campsite/' + ${campsite.id}" th:text="${campsite.name}"></a>
+                            </td>
+                            <td th:text="${campsite.location.park.name}"></td>
+                            <td th:text="${campsite.location.state.name}"></td>
+                            <td th:text="${campsite.numVisits}"></td>
+                            <td>
+                                <a th:href="'/explore/campsite/' + ${campsite.id} + '/log/editor/0'" class="btn btn-primary">Log Visit</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
 

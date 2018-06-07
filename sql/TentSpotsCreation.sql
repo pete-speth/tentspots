@@ -74,3 +74,9 @@ create table Visit (
 alter table Visit
 	add constraint fk_Visit_Campsite
 	foreign key (CampsiteId) references Campsite(Id);
+    
+create table Login (
+	Username varchar(30) not null primary key,
+    PasswordHash varchar(256) not null,
+    Role varchar(30) not null
+);

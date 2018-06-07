@@ -22,9 +22,9 @@ public interface CampsiteRepository extends JpaRepository<Campsite,Integer> {
                     + "inner join Park p on l.park = p.id "
                     + "inner join State s on l.state = s.id "
                     + "where "
-                    + "((?1 is null or c.name = ?1) and "
-                    + "(?2 is null or p.name = ?2) and "
-                    + "(?3 is null or s.abbr = ?3))"
+                    + "((?1 is null or ?1 = '' or c.name  like %?1%) and "
+                    + "(?2 is null or ?2 = '' or p.name like %?2%) and "
+                    + "(?3 is null or ?3 = '' or s.abbr = ?3))"
     
     )
     public List<Campsite> search(String campsiteName, String parkName, String stateAbbr);

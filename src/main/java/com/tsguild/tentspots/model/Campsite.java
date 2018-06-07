@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -26,6 +28,10 @@ public class Campsite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
+    @NotNull
+    @Size(min=1, message="Name is required.")
+    @Size(max=50, message="Name: 50 characters maximum")
     private String name;
     
     @Transient
@@ -45,6 +51,10 @@ public class Campsite {
 
     public int getId() {
         return id;
+    }
+    
+    public void setId(int id){
+        this.id = id;
     }
 
     public String getName() {

@@ -5,30 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Explore | TentSpots</title>
+    <title>Home | TentSpots</title>
 
     <link rel="shortcut icon" href="/images/tent.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Quicksand" rel="stylesheet">
     <link rel="stylesheet" href="/css/general.css">
-    <link rel="stylesheet" href="/css/explore-campsite.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 
 <body>
     <div class="container-fluid pl-5 pr-5">
-
         <div class="header">
             <div sec:authorize="isAuthenticated()" style="text-align: right; font-size: 18px">
                 <a href="/logout">Log Out</a>
             </div>
             <h1>TentSpots<image id="fire" src="/images/campfire.gif"></image></h1>
+            
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a href="/" class="nav-link">Home</a>
+                    <a href="/" class="nav-link active">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/explore" class="nav-link active">Explore</a>
+                    <a href="/explore" class="nav-link">Explore</a>
                 </li>
                 <li class="nav-item">
                     <a href="/update" class="nav-link">Update</a>
@@ -36,45 +36,35 @@
             </ul>
         </div>
 
-        <div id="content" class="row">
-            <div class="col-md-6">
+        <h2>Featured Campsites</h2>
 
-                <div id="info">
-                    <h2 th:text="${campsite.name}"></h2>
-                    <input id="campsiteId" type="hidden" th:value="${campsite.id}" /
-
-                    <p th:text="${campsite.location.park.name} + ', ' + ${campsite.location.state.name}"></p>
-                    <p><span>Lat/Long: </span><span th:text="${campsite.location.latitude} + ', ' + ${campsite.location.longitude}"></span></p>
-                    <p>Features:</p>
-                    <ul>
-                        <li th:each="feature: ${campsite.features}" th:text="${feature.name}"></li>
-                    </ul>
+        <div class="carousel slide w-100 h-100" data-ride="carousel" data-interval="4000">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div id="slide0" class="row">
+                        <div class="col-md-6">
+                            <div id="map0" class="map"></div>
+                        </div>
+                    </div>
                 </div>
-
-                <div id="buttons">
-                    <a th:href="'/explore/campsite/' + ${campsite.id} + '/log'" class="btn btn-primary">See all visits</a>
-                    <a th:href="'/explore/campsite/' + ${campsite.id} + '/log/editor/0'" class="btn btn-primary">Log Visit</a>
-                    <a href="/explore" class="btn btn-danger">Back To Explore</a>
+                <div class="carousel-item">
+                    <div id="slide1" class="row">
+                        <div class="col-md-6">
+                            <div id="map1" class="map"></div>
+                        </div>
+                    </div>
                 </div>
-
-                <div id="recentVisits">
-                    <h3>Recent Vists:</h3>
+                <div class="carousel-item">
+                    <div id="slide2" class="row">
+                        <div class="col-md-6">
+                            <div id="map2" class="map"></div>
+                        </div>
+                    </div>
                 </div>
-
-
-
             </div>
-
-            <div class="col-md-6">
-                <div id="map" class="w-75 h-75"></div>
-            </div>
-
-
         </div>
 
     </div>
-
-
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
@@ -83,10 +73,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-    <script src="/js/explore-campsite.js"></script>
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBL7PejxU79ckOcl-eKA_8WDHxFh_O7YMk&callback=renderMap">
-    </script>
+    <script src="/js/index.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBL7PejxU79ckOcl-eKA_8WDHxFh_O7YMk&callback=renderMaps"
+        type="text/javascript"></script>
 </body>
 
 </html>

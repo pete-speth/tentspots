@@ -74,7 +74,7 @@ public class CampsiteRepositoryTest {
         assertTrue(numParks < parkRepo.findAll().size());
         
         l = new Location();
-        l.setLatitiude(BigDecimal.ZERO);
+        l.setLatitude(BigDecimal.ZERO);
         l.setLongitude(BigDecimal.ZERO);
         l.setPark(p);
         l.setState(state);

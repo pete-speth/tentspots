@@ -6,12 +6,18 @@
 package com.tsguild.tentspots.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -19,24 +25,48 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class Visit {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
+    @NotNull(message = "Group Leader is required.")
+    @Size(min=1, message = "Group Leader is required.")
+    @Size(max=60, message = "Group Leader: 60 characters max.")
     private String groupLeader;
+
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+    @Transient
+    private String startDateStr;
+
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
+    @Transient
+    private String endDateStr;
+    
+    @NotNull
+    @Min(1)
     private int groupSize;
     private String notes;
-    
+
     @ManyToOne
     @JoinColumn(name = "CampsiteId")
     private Campsite campsite;
+    
+    @Transient
+    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id){
+        this.id = id;
+    }
+    
     public String getGroupLeader() {
         return groupLeader;
     }
@@ -48,6 +78,11 @@ public class Visit {
     public LocalDate getStartDate() {
         return startDate;
     }
+    
+    public String getStartDateStr() {
+        startDateStr = fmt.format(startDate);
+        return startDateStr;
+    }
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
@@ -55,6 +90,11 @@ public class Visit {
 
     public LocalDate getEndDate() {
         return endDate;
+    }
+    
+     public String getEndDateStr(){
+        endDateStr =  fmt.format(endDate);
+        return endDateStr;
     }
 
     public void setEndDate(LocalDate endDate) {

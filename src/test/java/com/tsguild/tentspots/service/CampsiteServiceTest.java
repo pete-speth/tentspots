@@ -8,10 +8,8 @@ package com.tsguild.tentspots.service;
 import com.tsguild.tentspots.data.CampsiteRepository;
 import com.tsguild.tentspots.data.VisitRepository;
 import com.tsguild.tentspots.model.Campsite;
-import com.tsguild.tentspots.model.Location;
-import com.tsguild.tentspots.model.Park;
-import com.tsguild.tentspots.model.State;
 import com.tsguild.tentspots.model.Visit;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -51,7 +49,11 @@ public class CampsiteServiceTest {
         campsites.add(c2);
         
         Visit v1 = new Visit();
+        v1.setStartDate(LocalDate.now());
+        v1.setEndDate(LocalDate.now());
         Visit v2 = new Visit();
+        v2.setStartDate(LocalDate.now());
+        v2.setEndDate(LocalDate.now());
         
         visits.add(v1);
         visits.add(v2);
@@ -83,14 +85,7 @@ public class CampsiteServiceTest {
 
         when(campRepo.search(null, null, null)).thenReturn(campsites);
         
-        Campsite c = new Campsite();
-        Location l = new Location();
-        l.setPark(new Park());
-        l.setState(new State());
-        
-        c.setLocation(l);
-        
-        List<Campsite> results = service.getCampsitesFromSearch(c);
+        List<Campsite> results = service.getCampsitesFromSearch(null, null, null);
 
         assertNotNull(results);
         assertTrue(results.size() > 0);

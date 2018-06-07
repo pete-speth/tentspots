@@ -1,0 +1,14 @@
+h2 {
+    text-align: center;
+    padding-top: 20px;
+}
+
+input, select {
+    float: right;
+    width: 80%;
+}
+
+#buttons {
+    text-align: center;
+    padding-top: 5px;
+}

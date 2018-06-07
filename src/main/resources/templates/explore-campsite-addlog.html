@@ -7,55 +7,110 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Explore | TentSpots</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    <link rel="shortcut icon" href="/images/tent.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/explore-campsite-addlog.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1>TentSpots</h1>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a href="/" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item active">
-                <a href="/explore" class="nav-link">Explore</a>
-            </li>
-            <li class="nav-item">
-                <a href="/update" class="nav-link">Update</a>
-            </li>
-        </ul>
+    <div class="container-fluid pl-5 pr-5">
 
-        <form>
-            <label for="campsite">Campsite: </label>
-            <input type="text" name="campsite" th:value="${campsite.name}" readonly/>
-            <input type="hidden" th:value="${campsite}"/>
-            <br/>
+        <div class="header">
+            <div sec:authorize="isAuthenticated()" style="text-align: right; font-size: 18px">
+                <a href="/logout">Log Out</a>
+            </div>
+            <h1>TentSpots<image id="fire" src="/images/campfire.gif"></image></h1>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/explore" class="nav-link active">Explore</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/update" class="nav-link">Update</a>
+                </li>
+            </ul>
+        </div>
 
-            <label for="groupLeader">Group Leader Name:</label>
-            <input type="text" name="groupLeader">
-            <br/>
+        <div class="formContainer">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="campsiteName">Campsite: </label>
+                    <br/>
+                    <input type="text" name="campsiteName" th:value="${campsite.name}" readonly/>
+                    <input type="hidden" name="campsite" th:value="${campsite.id}" />
+                    <br/>
+                </div>
 
-            <label for="startDate">Start Date:</label>
-            <input type="date" name="startDate"/>
-            <br/>
+                <div class="form-group">
+                    <label for="groupLeader">Group Leader Name:</label>
+                    <br/>
+                    <input type="text" name="groupLeader" th:value='${visit?.groupLeader}'>
+                    <br/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('visit.groupLeader')}" th:errors="*{visit.groupLeader}">
+                        <br/>
+                    </span>
 
-            <label for="endDate">End Date:</label>
-            <input type="date" name="endDate"/>
-            <br/>
+                </div>
 
-            <label for="groupSize">Number in Group:</label>
-            <input type="number" name="groupSize"/>
-            <br/>
+                <div class="form-group">
+                    <label for="startDate">Start Date:</label>
+                    <br/>
+                    <input type="date" name="startDate" th:value='${visit?.startDate}' />
+                    <br/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('visit.startDate')}" th:errors="*{visit.startDate}">
+                        <br/>
+                    </span>
 
-            <button type="submit">Done</button>
-        </form>
+                </div>
+
+                <div class="form-group">
+                    <label for="endDate">End Date:</label>
+                    <br/>
+                    <input type="date" name="endDate" th:value='${visit?.endDate}' />
+                    <br/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('visit.endDate')}" th:errors="*{visit.endDate}">
+                        <br/>
+                    </span>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="groupSize">Number in Group:</label>
+                    <br/>
+                    <input type="number" name="groupSize" th:value=${visit?.groupSize} value="1" />
+                    <br/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('visit.groupSize')}" th:errors="*{visit.groupSize}">
+                        <br/>
+                    </span>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notes:</label>
+                    <br/>
+                    <textarea name="notes" th:text="${visit?.notes}"></textarea>
+
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Done</button>
+                    <button type="button" class="btn btn-danger" onclick="history.go(-1)">Cancel</button>
+                </div>
+            </form>
+        </div>
 
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
 

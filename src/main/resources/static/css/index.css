@@ -1,0 +1,32 @@
+
+h2 {
+    padding-top: 20px;
+}
+
+.carousel {
+    border: 5px solid rgb(211, 229, 194);;
+    border-radius: 10px;
+}
+
+.siteName {
+    font-size: 32px;
+}
+
+.row {
+    height: 500px;
+}
+
+.map {
+    height: 95%;
+    width: 95%;
+    margin: auto;
+    margin-top: 1.5%;
+    border-radius: 10px;
+    
+}
+
+.info {
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+}

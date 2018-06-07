@@ -7,64 +7,142 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Update | TentSpots</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    <link rel="shortcut icon" href="/images/tent.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Quicksand" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/update-editor.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1>TentSpots</h1>
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a href="/" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item">
-                <a href="/explore" class="nav-link">Explore</a>
-            </li>
-            <li class="nav-item active">
-                <a href="/update" class="nav-link">Update</a>
-            </li>
-        </ul>
+    <div class="container-fluid pl-5 pr-5">
 
-        <form>
-            <label for="name">Campsite Name: </label>
-            <input type="text" name="name" />
-            <br/>
+        <div class="header">
+            <div sec:authorize="isAuthenticated()" style="text-align: right; font-size: 18px">
+                <a href="/logout">Log Out</a>
+            </div>
+            <h1>TentSpots<image id="fire" src="/images/campfire.gif"></image></h1>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/explore" class="nav-link">Explore</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/update" class="nav-link active">Update</a>
+                </li>
+            </ul>
+        </div>
 
-            <label for="latitude">Latitude: </label>
-            <input type="number" name="latitude" min="-90" max="90" step="0.000001" />
-            <br/>
+        <form method="POST">
 
-            <label for="longitude">Longitude: </label>
-            <input type="number" name="longitude" min="-180" max="180" step="0.000001" />
-            <br/>
-
-            <label for="park">Park Name: </label>
-            <select name="park">
-                <option th:each="park: ${parks}" th:value="${park}" th:text="${park.name}"></option>
-            </select>
-            <br/>
-
-            <label for="state">State: </label>
-            <select name="state">
-                <option th:each="state: ${states}" th:value="${state}" th:text="${state.name}"></option>
-            </select>
-            <br/>
-
-            <div id="featureCheckbox" th:each="feature: ${features}">
-                <label th:for="${feature.name}" th:text="${feature.name} + ': '"></label>
-                <input type="checkbox" th:name="${feature.name}" th:value="feature">
+            <div class="form-group">
+                <label for="name">Campsite Name: </label>
+                <br/>
+                <input type="text" name="name" th:value="${campsite.name}" required />
+                <br/>
+                <span class="text-danger" th:if="${#fields.hasErrors('campsite.name')}" th:errors="*{campsite.name}">
+                    <br/>
+                </span>
+                <input id="campsiteId" type="hidden" th:value="${campsite?.id}" />
             </div>
 
-            <button type="submit">Done</button>
+            <div class="form-group">
+                <label for="latitude">Latitude: </label>
+                <br/>
+                <input type="number" name="latitude" min="-90" max="90" step="0.000001" th:value="${campsite?.location?.latitude}" required />
+                <br/>
+                <span class="text-danger" th:if="${#fields.hasErrors('location.latitude')}" th:errors="*{location.latitude}">
+                    <br/>
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="longitude">Longitude: </label>
+                <br/>
+                <input type="number" name="longitude" min="-180" max="180" step="0.000001" th:value="${campsite?.location?.longitude}" required />
+                <br/>
+                <span class="text-danger" th:if="${#fields.hasErrors('location.longitude')}" th:errors="*{location.longitude}">
+                    <br/>
+                </span>
+            </div>
+
+            <div class="form-group">
+                <div id="existingPark">
+                    <label for="park">Park Name: </label>
+                    <br/>
+                    <select name="park">
+                        <option th:each="park: ${parks}" th:value="${park.id}" th:text="${park.name}" th:selected="${campsite?.location?.park?.id} == ${park.id}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="newPark" class="d-none">
+                <div class="form-group">
+                    <label for="parkName">Park Name:</label>
+                    <br/>
+                    <input type="text" id="parkName" name="parkName" th:value="${parkName}" />
+                    <br/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('p.name')}" th:errors="*{p.name}">
+                        <br/>
+                    </span>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="governingOrg">Governing Organization:</label>
+                    <br/>
+                    <input type="text" name="governingOrg" th:value=${governingOrg} />
+                    <br/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('p.governingOrg')}" th:errors="*{p.governingOrg}">
+                        <br/>
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" id="clicked" name="isNewPark" value="false" />
+                <button id="parkBtn" type="button" class="btn btn-primary" onclick="showParkFields()">Add A New Park</button>
+                <br/>
+            </div>
+
+            <div class="form-group">
+                <label for="state">State: </label>
+                <br/>
+                <select name="state">
+                    <option th:each="state: ${states}" th:value="${state.abbr}" th:text="${state.name}" th:selected="${campsite?.location?.state?.abbr} == ${state.abbr}"></option>
+                </select>
+                <br/>
+            </div>
+
+            <div class="form-group">
+                <div id="featureCheckbox" th:each="feature: ${features}">
+                    <input type="checkbox" th:id="'feature' + ${feature.id}" th:name="featureIds" th:value="${feature.id}" th:text="${feature.name}"
+                    />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Done</button>
+                <a href="/update" class="btn btn-danger">Cancel</a>
+            </div>
         </form>
 
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script src="/js/update-editor.js"></script>
 </body>
 
 </html>
