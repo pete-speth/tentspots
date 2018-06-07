@@ -49,7 +49,7 @@
                 <div class="form-group">
                     <label for="groupLeader">Group Leader Name:</label>
                     <br/>
-                    <input type="text" name="groupLeader" th:value='${visit?.groupLeader}'>
+                    <input type="text" name="groupLeader" th:value='${visit?.groupLeader}' required>
                     <br/>
                     <span class="text-danger" th:if="${#fields.hasErrors('visit.groupLeader')}" th:errors="*{visit.groupLeader}">
                         <br/>
@@ -60,7 +60,7 @@
                 <div class="form-group">
                     <label for="startDate">Start Date:</label>
                     <br/>
-                    <input type="date" name="startDate" th:value='${visit?.startDate}' />
+                    <input type="date" name="startDate" th:value='${visit?.startDate}' required />
                     <br/>
                     <span class="text-danger" th:if="${#fields.hasErrors('visit.startDate')}" th:errors="*{visit.startDate}">
                         <br/>
@@ -71,7 +71,7 @@
                 <div class="form-group">
                     <label for="endDate">End Date:</label>
                     <br/>
-                    <input type="date" name="endDate" th:value='${visit?.endDate}' />
+                    <input type="date" name="endDate" th:value='${visit?.endDate}' required/>
                     <br/>
                     <span class="text-danger" th:if="${#fields.hasErrors('visit.endDate')}" th:errors="*{visit.endDate}">
                         <br/>
@@ -82,7 +82,7 @@
                 <div class="form-group">
                     <label for="groupSize">Number in Group:</label>
                     <br/>
-                    <input type="number" name="groupSize" th:value=${visit?.groupSize} value="1" />
+                    <input type="number" name="groupSize" th:value=${visit?.groupSize} required />
                     <br/>
                     <span class="text-danger" th:if="${#fields.hasErrors('visit.groupSize')}" th:errors="*{visit.groupSize}">
                         <br/>
